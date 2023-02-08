@@ -3,3 +3,9 @@ num xx yy yy yy
 
 gdzie xx to rozmiar tablicy, a yy to 0 lub 1
 num to numer rozpatrywanego przypadku
+
+dane w module perceptron będą trzymane w następujący sposób:
+pojedyńcza dana to krotka:
+(num_przypadku, [wektor_01])
+
+Klasa DaytaLearn pozwala na wczytywanie poszczególnych danych do uczenia

@@ -1,11 +1,27 @@
 from array import array
 from random import uniform, randint
+from math import sqrt
+
 
 def heviside(x):
     if x < 0:
         return 0.0
     else:
         return 1.0
+
+class DataLearn:
+    def __init__(self):
+        self.data = []
+
+    def read(self, file):
+        read_data = file.read().split()
+        case_num = int(read_data[0])
+        num_squares = int(read_data[1])
+        dimension = int(sqrt(num_squares))
+        vector = array('d', map(int, read_data[2:]))
+        case = (case_num, vector)
+        self.data.append(case)
+        
 
 class Perceptron:
     def __init__(self, r, s):
@@ -57,3 +73,14 @@ class Perceptron:
             for i, x_i in enumerate(x):
                 self.w[neur_number][i] -= x_i 
             self.b[neur_number] -= 1
+
+
+def perceptron_is_valid(perceptron, data_learn):
+    for case, datum in data_learn:
+        y = perceptron.evaluate(datum)
+
+def learn_perceptron(perceptron, data_learn, max_iteration=None):
+    pass
+
+def learn_perceptron_with_iter(perceptron, data_learn, max_iteration):
+    pass
