@@ -1,4 +1,5 @@
 from array import array
+from itertools import product
 from random import uniform, randint
 from math import sqrt
 
@@ -76,11 +77,21 @@ class Perceptron:
 
 
 def perceptron_is_valid(perceptron, data_learn):
+    valid = []
     for case, datum in data_learn:
         y = perceptron.evaluate(datum)
+        valid.append((y[case] == 1) and (sum(y) == 1))
+    return all(valid)
 
 def learn_perceptron(perceptron, data_learn, max_iteration=None):
-    pass
+    iteration = 0
+    while not perceptron_is_valid(perceptron, data_learn):
+        for out_number, case, datum in product(range(perceptron.s), data_learn):
+            if out_number == case:
+                perceptron.learn(out_number, datum, 1)
+            else:
+                perceptron.learn(out_number, datum, 0)
+            
 
 def learn_perceptron_with_iter(perceptron, data_learn, max_iteration):
     pass
