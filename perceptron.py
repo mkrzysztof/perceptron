@@ -2,6 +2,7 @@ from array import array
 from itertools import product
 from random import uniform, randint
 from math import sqrt
+import os
 
 
 def heviside(x):
@@ -30,6 +31,8 @@ class Perceptron:
         s - number of outputs (number of class"""
         self.b = array('d')
         self.w = []
+        self.r = r
+        self.s = s
         for neuron_number in range(s):
             b_0, w_i = self._create_neuron(r)
             self.b.append(b_0)
@@ -76,6 +79,7 @@ class Perceptron:
             self.b[neur_number] -= 1
 
 
+
 def perceptron_is_valid(perceptron, data_learn):
     valid = []
     for case, datum in data_learn:
@@ -85,7 +89,7 @@ def perceptron_is_valid(perceptron, data_learn):
 
 
 def learn_cycle(perceptron, data_learn):
-    for out_number, case, datum in product(range(perceptron.s), data_learn):
+    for out_number, (case, datum) in product(range(perceptron.s), data_learn.data):
         if out_number == case:
             perceptron.learn(out_number, datum, 1)
         else:
@@ -94,11 +98,24 @@ def learn_cycle(perceptron, data_learn):
 def learn_perceptron(perceptron, data_learn, max_iteration=None):
     iteration = 0
     while not perceptron_is_valid(perceptron, data_learn):
-        iteration++
+        iteration = iteration + 1
         learn_cycle(perceptron, data_learn)
-        if iteration > max_teration:
-            break            
+        if max_iteration is not None:
+            if iteration > max_teration:
+                break            
 
 def learn_perceptron_with_iter(perceptron, data_learn, max_iteration):
     for iteration in range(max_iteration):
         learn_cycle(perceptron, data_learn)
+
+
+def learn(perceptron, learn_function, max_iteration, learn_directory):
+    data_learn = DataLearn()
+    for file_name in os.listdir(learn_directory):
+        with open(os.path.join(learn_directory, file_name)) as file:
+            data_learn.read(file)
+    learn_function(perceptron, data_learn, max_iteration)
+
+if __name__ == '__main__':
+    perceptron = Perceptron(8*8, 7)
+    learn(perceptron, learn_perceptron_with_iter, 100, 'uczenie')
