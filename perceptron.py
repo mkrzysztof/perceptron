@@ -83,15 +83,22 @@ def perceptron_is_valid(perceptron, data_learn):
         valid.append((y[case] == 1) and (sum(y) == 1))
     return all(valid)
 
+
+def learn_cycle(perceptron, data_learn):
+    for out_number, case, datum in product(range(perceptron.s), data_learn):
+        if out_number == case:
+            perceptron.learn(out_number, datum, 1)
+        else:
+            perceptron.learn(out_number, datum, 0)
+
 def learn_perceptron(perceptron, data_learn, max_iteration=None):
     iteration = 0
     while not perceptron_is_valid(perceptron, data_learn):
-        for out_number, case, datum in product(range(perceptron.s), data_learn):
-            if out_number == case:
-                perceptron.learn(out_number, datum, 1)
-            else:
-                perceptron.learn(out_number, datum, 0)
-            
+        iteration++
+        learn_cycle(perceptron, data_learn)
+        if iteration > max_teration:
+            break            
 
 def learn_perceptron_with_iter(perceptron, data_learn, max_iteration):
-    pass
+    for iteration in range(max_iteration):
+        learn_cycle(perceptron, data_learn)

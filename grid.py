@@ -99,8 +99,8 @@ def load_pic():
     with open(filename, "r") as f:
         load_grid(f)
 
-    
+
 if __name__ == '__main__':
-    net = Net(5)
+    net = Net(8)
     net.mainloop()
     
