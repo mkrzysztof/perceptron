@@ -3,7 +3,7 @@ from itertools import product
 from random import uniform, randint
 from math import sqrt
 import os
-
+import pickle
 
 def heviside(x):
     if x < 0:
@@ -82,7 +82,7 @@ class Perceptron:
 
 def perceptron_is_valid(perceptron, data_learn):
     valid = []
-    for case, datum in data_learn:
+    for case, datum in data_learn.data:
         y = perceptron.evaluate(datum)
         valid.append((y[case] == 1) and (sum(y) == 1))
     return all(valid)
@@ -118,4 +118,9 @@ def learn(perceptron, learn_function, max_iteration, learn_directory):
 
 if __name__ == '__main__':
     perceptron = Perceptron(8*8, 7)
-    learn(perceptron, learn_perceptron_with_iter, 100, 'uczenie')
+    learn(perceptron, learn_perceptron, None, 'uczenie')
+    with open('serializacja1', 'wb') as file:
+        pickle.dump(perceptron, file)
+    with open('serializacja1', 'rb') as file:
+        perceptron1 = pickle.load(file)
+    print(perceptron1)
