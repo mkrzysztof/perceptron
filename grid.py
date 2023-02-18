@@ -15,7 +15,6 @@ class Net(ttk.Frame):
         self.dimension=dimension
         self.grid_propagate(0)
         self.grid(column=0, row=0)
-        self.btn_arr = []
         self.add_save_load_button()
         self.add_entry()
         self.add_grids()
@@ -41,30 +40,10 @@ class Net(ttk.Frame):
 
     def add_grids(self):
         self.button_grid = ButtonGrid(self, self.dimension)
-            
-def save_grid(net, file):
-    file.write(f"{net.entry_case.get()} ")
-    file.write(f"{len(net.btn_arr)} ")
-    for btn in net.btn_arr:
-        file.write(f"{btn.cell} ")
 
 def save_pic(net):
     net.button_grid.save_pic(int(net.entry_case.get()))
 
-def load_grid(file):
-    data = file.read().split()
-    case_num = int(data[0])
-    num_squares = int(data[1])
-    dimension = int(sqrt(num_squares))
-    net = Net(dimension)
-    net.entry_case.insert(0, str(case_num))
-    for d, btn in zip(data[2:], net.btn_arr):
-        if int(d) == 0:
-            btn.cell = 0
-            btn.configure(style="Green.TButton")
-        else:
-            btn.cell = 1
-            btn.configure(style="Red.TButton")
             
 def load_pic():
     case_num = net.button_grid.load_pic()
