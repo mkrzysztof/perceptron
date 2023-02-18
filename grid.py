@@ -4,7 +4,7 @@
 from math import sqrt
 from tkinter import ttk
 from tkinter import filedialog
-from buttongrid import ButtonColor, ButtonGrid
+from buttongrid import ButtonGrid
 
 
 
@@ -40,13 +40,17 @@ class Net(ttk.Frame):
 
     def add_grids(self):
         self.button_grid = ButtonGrid(self, self.dimension)
+        self.button_grid.grid()
 
 def save_pic(net):
     net.button_grid.save_pic(int(net.entry_case.get()))
 
             
 def load_pic():
-    case_num = net.button_grid.load_pic()
+    net.button_grid.destroy()
+    case_num, button_grid = net.button_grid.load_pic()
+    net.button_grid = button_grid
+    button_grid.grid()
     text = net.entry_case.get()
     if text:
         net.entry_case.delete(0, len(text))
