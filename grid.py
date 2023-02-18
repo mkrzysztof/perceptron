@@ -67,9 +67,11 @@ def load_grid(file):
             btn.configure(style="Red.TButton")
             
 def load_pic():
-    filename = filedialog.askopenfilename()
-    with open(filename, "r") as f:
-        load_grid(f)
+    case_num = net.button_grid.load_pic()
+    text = net.entry_case.get()
+    if text:
+        net.entry_case.delete(0, len(text))
+    net.entry_case.insert(0, str(case_num))
 
 
 if __name__ == '__main__':
