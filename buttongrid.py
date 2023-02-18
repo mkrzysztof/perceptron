@@ -59,8 +59,6 @@ class ButtonGrid:
         case_num = int(data[0])
         num_squares = int(data[1])
         dimension = int(sqrt(num_squares))
-        # usunąć self.root.button_grid
-        self.grids_frame.destroy()
         button_grid = ButtonGrid(self.root, dimension)
         for d, btn in zip(data[2:], button_grid.btn_array):
             if int(d) == 0:
