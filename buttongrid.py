@@ -20,3 +20,51 @@ class ButtonColor(ttk.Button):
         else:
             self.configure(style="Green.TButton")
             self.cell = 0
+
+
+class ButtonGrid:
+    def __init__(self, root, dimension):
+        self.btn_array = []
+        self.dimension = dimension
+        self.root = root
+        grids_frame = ttk.Frame(root, width=400, height=400)
+        grids_frame.propagate(0)
+        grids_frame.grid()
+        grids_frame.columnconfigure(self.dimension+1)
+        grids_frame.rowconfigure(self.dimension+1)
+        for row, col in product(range(self.dimension), repeat=2):
+            b = ButtonColor(grids_frame, width=1)
+            b.grid(column=col, row=row)
+            self.btn_arr.append(b)
+
+    def save_grid(self, case_number, file):
+        file.write(f"{case_number} ")
+        file.write(f"{len(self.btn_arr)} "}
+        for btn in self.btn_arr:
+            file.write(f"{btn.cell} ")
+
+    def save_pic(self, case_number):
+        filename = filedialog.asksaveasfilename()
+        with open(filename, "w") as f:
+            self.save_grid(case_number, f)
+
+    def load_grid(self, file):
+        data = file.read().split()
+        case_num = int(data[0])
+        num_squares = int(data[1])
+        dimension = int(sqrt(num_squares))
+        button_grid = ButtonGrid(self.root, dimension)
+        for d, btn in zip(data[2:], button_grid.btn_arr):
+            if int(d) == 0:
+                btn.cell = 0
+                btn.configure(style="Green.TButton")
+            else:
+                btn.cell = 1
+                btn.configure(style="Red.TButton")
+        return case_num
+
+    def load_pic(self):
+        filename = filedialog.askopenfilename()
+        with open(filename, "r") as f:
+            case_num = self.load_grid(f)
+        return case_num
