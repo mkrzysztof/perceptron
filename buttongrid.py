@@ -1,5 +1,6 @@
-from tkinter import ttk
-
+from itertools import product
+from tkinter import ttk, filedialog
+from math import sqrt
 
 s = ttk.Style()
 s.configure("Red.TButton", background="red")
@@ -35,12 +36,12 @@ class ButtonGrid:
         for row, col in product(range(self.dimension), repeat=2):
             b = ButtonColor(grids_frame, width=1)
             b.grid(column=col, row=row)
-            self.btn_arr.append(b)
+            self.btn_array.append(b)
 
     def save_grid(self, case_number, file):
         file.write(f"{case_number} ")
-        file.write(f"{len(self.btn_arr)} "}
-        for btn in self.btn_arr:
+        file.write(f"{len(self.btn_array)} ")
+        for btn in self.btn_array:
             file.write(f"{btn.cell} ")
 
     def save_pic(self, case_number):
@@ -54,7 +55,7 @@ class ButtonGrid:
         num_squares = int(data[1])
         dimension = int(sqrt(num_squares))
         button_grid = ButtonGrid(self.root, dimension)
-        for d, btn in zip(data[2:], button_grid.btn_arr):
+        for d, btn in zip(data[2:], button_grid.btn_array):
             if int(d) == 0:
                 btn.cell = 0
                 btn.configure(style="Green.TButton")

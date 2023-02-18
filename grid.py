@@ -1,10 +1,10 @@
 # program do tworzenie pixelowych obrazków w 2 kolorach
 # a następnie ich zapisywania w formie pojedyńczego wektora
-from itertools import product
+
 from math import sqrt
 from tkinter import ttk
 from tkinter import filedialog
-from buttongrid import ButtonColor
+from buttongrid import ButtonColor, ButtonGrid
 
 
 
@@ -40,15 +40,7 @@ class Net(ttk.Frame):
         self.load_btn.grid(column=2, row=1)
 
     def add_grids(self):
-        grids_frame = ttk.Frame(self, width=400, height=400)
-        grids_frame.propagate(0)
-        grids_frame.grid()
-        grids_frame.columnconfigure(self.dimension+1)
-        grids_frame.rowconfigure(self.dimension+1)
-        for row, col in product(range(self.dimension), repeat=2):
-            b = ButtonColor(grids_frame, width=1)
-            b.grid(column=col, row=row)
-            self.btn_arr.append(b)
+        self.button_grid = ButtonGrid(self, self.dimension)
             
 def save_grid(net, file):
     file.write(f"{net.entry_case.get()} ")
@@ -57,9 +49,7 @@ def save_grid(net, file):
         file.write(f"{btn.cell} ")
 
 def save_pic(net):
-    filename = filedialog.asksaveasfilename()
-    with open(filename, "w") as f:
-        save_grid(net, f)
+    net.button_grid.save_pic(int(net.entry_case.get()))
 
 def load_grid(file):
     data = file.read().split()
