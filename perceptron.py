@@ -4,6 +4,7 @@ from random import uniform, randint
 from math import sqrt
 import os
 import pickle
+import sys
 
 def heviside(x):
     if x < 0:
@@ -118,9 +119,7 @@ def learn(perceptron, learn_function, max_iteration, learn_directory):
 
 if __name__ == '__main__':
     perceptron = Perceptron(8*8, 7)
-    learn(perceptron, learn_perceptron, None, 'uczenie')
-    with open('serializacja1', 'wb') as file:
+    learn(perceptron, learn_perceptron, None, sys.argv[1])
+    with open(argv[2], 'wb') as file:
         pickle.dump(perceptron, file)
-    with open('serializacja1', 'rb') as file:
-        perceptron1 = pickle.load(file)
-    print(perceptron1)
+    
