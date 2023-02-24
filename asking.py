@@ -2,6 +2,7 @@
 from array import array
 import math
 import pickle
+import sys
 from tkinter import ttk
 from buttongrid import ButtonGrid
 from perceptron import Perceptron
@@ -43,7 +44,7 @@ def evaluate(perceptron, button_grid):
     return perceptron.evaluate(x)
 
 if __name__ == "__main__":
-    with open("serializacja1", "rb") as f:
+    with open(sys.argv[1], "rb") as f:
         perceptron1 = pickle.load(f)
     perceptron = Perceptron(8*8, 4)
     ask = Asking(perceptron1)

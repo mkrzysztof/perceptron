@@ -120,6 +120,6 @@ def learn(perceptron, learn_function, max_iteration, learn_directory):
 if __name__ == '__main__':
     perceptron = Perceptron(8*8, 7)
     learn(perceptron, learn_perceptron, None, sys.argv[1])
-    with open(argv[2], 'wb') as file:
+    with open(sys.argv[2], 'wb') as file:
         pickle.dump(perceptron, file)
     
